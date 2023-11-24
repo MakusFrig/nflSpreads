@@ -1,0 +1,11 @@
+This file contains the formulas to apply to the spreadsheet to extract the data
+
+
+This first one is to determine if the team covered or not
+=IF(H2+F2>0, "C", "NC")
+
+This second one is to determine if the team went under or not
+=IF(G2-(C2+D2)>0, "U", "O")
+
+This one returns 1 if the dog covered the spread and went under
+=IF(AND(I2="NC", J2="U"), 1, 0)

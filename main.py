@@ -8,6 +8,8 @@ import pandas as pd
 
 import csv
 
+import time
+
 #data
 
 #just a test for github
@@ -214,15 +216,51 @@ def get_betting_info(link):
 
     
 
+start = time.time()
+
+boxscores = get_season_games('2023')
+
+print(len(boxscores))
+
+scoreLines = []
+
+totalScores = len(boxscores)
+
+topLine = ['Home Team', 'Away Team', 'Home Score', 'Away Score', 'Favorite', 'Spread', 'Over/Under', 'MOV (Favorite)']
+
+file = open('gamelog.csv', 'w')
+
+writer = csv.writer(file)
+
+writer.writerow(topLine)
+
+file.close()
+
+for i in range(len(boxscores)):
+    print(i)
+    scoreLines.append(get_betting_info(boxscores[i]))
+
+    time.sleep(4)
+
+    avgTimePerReq = (time.time()-start)/(i+1)
+
+    print('Estimated Time to Finish: ' + str(avgTimePerReq * (totalScores - i)) + 'seconds')
+    
+    
+    file = open('gamelog.csv', 'a')
+
+    writer = csv.writer(file)
+
+    writer.writerow(scoreLines[i])
+
+    file.close()
 
 
-boxscores = get_season_games('2022')
 
 
+#C	U	0
 
-for i in range(10):
 
-    print(get_betting_info(boxscores[i]))
 
 #format of the csv file should be 
 
