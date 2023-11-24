@@ -10,6 +10,8 @@ import csv
 
 #data
 
+#just a test for github
+
 class Game:
 
     def __init__(self, spread, ou, score):
