@@ -204,8 +204,13 @@ def get_betting_info(link):
 
     spread = [' '.join(temp[0:len(temp)-1]), temp[len(temp)-1]]
 
-    mov = int(boxScoreTable['Final'][0])-int(boxScoreTable['Final'][1])
+    if spread[0] == homeTeam: #home team is the favorite
 
+        mov = int(boxScoreTable['Final'][0])-int(boxScoreTable['Final'][1])
+
+    else:
+
+        mov = int(boxScoreTable['Final'][1])-int(boxScoreTable['Final'][0])
     ou = game_info['Over/Under'].split(' ')[0]
 
     #from here we want to convert everything to a data frame
@@ -216,47 +221,51 @@ def get_betting_info(link):
 
     
 
-start = time.time()
+def get_season_csv(year):
 
-boxscores = get_season_games('2023')
+    start = time.time()
 
-print(len(boxscores))
 
-scoreLines = []
 
-totalScores = len(boxscores)
+    boxscores = get_season_games(str(year))
 
-topLine = ['Home Team', 'Away Team', 'Home Score', 'Away Score', 'Favorite', 'Spread', 'Over/Under', 'MOV (Favorite)']
+    print(len(boxscores))
 
-file = open('gamelog.csv', 'w')
+    scoreLines = []
 
-writer = csv.writer(file)
+    totalScores = len(boxscores)
 
-writer.writerow(topLine)
+    topLine = ['Home Team', 'Away Team', 'Home Score', 'Away Score', 'Favorite', 'Spread', 'Over/Under', 'MOV (Favorite)']
 
-file.close()
-
-for i in range(len(boxscores)):
-    print(i)
-    scoreLines.append(get_betting_info(boxscores[i]))
-
-    time.sleep(4)
-
-    avgTimePerReq = (time.time()-start)/(i+1)
-
-    print('Estimated Time to Finish: ' + str(avgTimePerReq * (totalScores - i)) + 'seconds')
-    
-    
-    file = open('gamelog.csv', 'a')
+    file = open('gamelog.csv', 'w')
 
     writer = csv.writer(file)
 
-    writer.writerow(scoreLines[i])
+    writer.writerow(topLine)
 
     file.close()
 
+    for i in range(len(boxscores)):
+        print(i)
+        scoreLines.append(get_betting_info(boxscores[i]))
+
+        time.sleep(3)
+
+        avgTimePerReq = (time.time()-start)/(i+1)
+
+        print('Estimated Time to Finish: ' + str(avgTimePerReq * (totalScores - i)) + 'seconds')
+        
+        
+        file = open('gamelog.csv', 'a')
+
+        writer = csv.writer(file)
+
+        writer.writerow(scoreLines[i])
+
+        file.close()
 
 
+get_season_csv(2019)
 
 #C	U	0
 

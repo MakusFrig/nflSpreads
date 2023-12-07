@@ -9,3 +9,6 @@ This second one is to determine if the team went under or not
 
 This one returns 1 if the dog covered the spread and went under
 =IF(AND(I2="NC", J2="U"), 1, 0)
+
+This one returns if the home team covers and the under
+=IF(OR(AND(E2=A2, I2="C",J2="U"), AND(B2=E2, I2="NC", J2="U")), 1, 0)
